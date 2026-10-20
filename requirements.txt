@@ -3,5 +3,5 @@ scikit-learn
 matplotlib
 seaborn
 soundfile
-librosa
+librosa==1.0.0
 pandas
