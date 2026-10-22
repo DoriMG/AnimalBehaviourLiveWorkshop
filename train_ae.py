@@ -16,8 +16,6 @@ from IPython import display
 from pathlib2 import Path
 
 
-
-
 # Data and model locations
 record_loc =  r"marmoset_calls.tfrecords"
 save_loc = 'AE_model_marmoset.keras'
@@ -114,9 +112,9 @@ for epoch in range(n_epochs):
     for batch, train_x in tqdm(
         zip(range(N_TRAIN_BATCHES), train_dataset), total=N_TRAIN_BATCHES
     ):
-        #print(train_x[-1].numpy()[:4])
         x = tf.cast(tf.reshape(train_x[0], [BATCH_SIZE] + list(DIMS)), tf.float32) / 255
         model.train_net(x)
+        
     # test on holdout
     loss = []
     for batch, test_x in tqdm(
@@ -125,7 +123,8 @@ for epoch in range(n_epochs):
         x = tf.cast(tf.reshape(test_x[0], [BATCH_SIZE] + list(DIMS)), tf.float32) / 255
         loss.append(model.compute_loss(x))
     losses.loc[len(losses)] = np.mean(loss, axis=0)
-    # plot results
+    
+    # output results
     display.clear_output()
     print(
         "Epoch: {} | recon_loss: {}".format(
@@ -156,6 +155,6 @@ for i, record in enumerate(tqdm(dataset.as_numpy_iterator())):
 
         latent_dataset +=[entry]
 
-
+# Output the latent features to a csv file
 latent_dataset = pd.concat(latent_dataset, ignore_index=True) 
 latent_dataset.to_csv('MDSAE_latent_features.csv', index=False)
