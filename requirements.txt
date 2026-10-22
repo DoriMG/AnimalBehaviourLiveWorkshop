@@ -5,3 +5,9 @@ seaborn
 soundfile
 librosa==1.0.0
 pandas
+torch
+tensorflow_probability
+tensorflow
+umap-learn
+tqdm
+tf-keras
